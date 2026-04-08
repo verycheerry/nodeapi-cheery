@@ -1,0 +1,24 @@
+{
+  "name": "nodeapi-cheery",
+  "version": "1.0.0",
+  "description": "This is a simple Node.js API created for DevOps assignment.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/verycheerry/nodeapi-cheery.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/verycheerry/nodeapi-cheery/issues"
+  },
+  "homepage": "https://github.com/verycheerry/nodeapi-cheery#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
