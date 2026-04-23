@@ -2,6 +2,7 @@ pipeline {
     agent { label 'MyAgent1' }
 
     stages {
+
         stage('Copy Files') {
             steps {
                 echo 'Copying files'
@@ -18,7 +19,7 @@ pipeline {
                 echo 'Building Docker image'
                 sh '''
                 cd /home/ubuntu/current
-                docker build -t nodeapi:v1 .
+                sudo docker build -t nodeapi:v1 .
                 '''
             }
         }
@@ -27,11 +28,12 @@ pipeline {
             steps {
                 echo 'Running container'
                 sh '''
-                docker stop nodeapi-container || true
-                docker rm nodeapi-container || true
-                docker run -d -p 5000:5000 --name nodeapi-container nodeapi:v1
+                sudo docker stop nodeapi-container || true
+                sudo docker rm nodeapi-container || true
+                sudo docker run -d -p 5000:5000 --name nodeapi-container nodeapi:v1
                 '''
             }
         }
+
     }
 }
