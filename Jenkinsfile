@@ -1,28 +1,43 @@
 pipeline {
-    agent any
+    agent { label 'MyAgent1' }
 
     stages {
-        stage('Build') {
+        stage('Clone Code') {
             steps {
-                sh 'npm install'
+                echo 'Cloning from GitHub'
+                git 'https://github.com/verycheerry/nodeapi-cheery.git'
             }
         }
 
-        stage('Test') {
+        stage('Copy Files') {
             steps {
-                echo 'Testing stage'
+                echo 'Copying files'
+                sh '''
+                rm -rf /home/ubuntu/current/
+                mkdir /home/ubuntu/current
+                cp -r * /home/ubuntu/current/
+                '''
             }
         }
 
-        stage('Docker Build') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker build -t nodeapi .'
+                echo 'Building Docker image'
+                sh '''
+                cd /home/ubuntu/current
+                docker build -t nodeapi:v1 .
+                '''
             }
         }
 
-        stage('Run Container') {
+        stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 3000:5000 nodeapi'
+                echo 'Running container'
+                sh '''
+                docker stop nodeapi-container || true
+                docker rm nodeapi-container || true
+                docker run -d -p 5000:5000 --name nodeapi-container nodeapi:v1
+                '''
             }
         }
     }
